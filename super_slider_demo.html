@@ -1,0 +1,190 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+<title>Super Slider Demo</title>
+
+<meta charset="utf-8">
+<style type="text/css">
+body {
+	font-family: helvetica, arial, sans-serif;
+	background-color: #222;
+	margin: 0px;
+	margin: 50px 50px;
+	color: #EEE;
+	font-size: 13px;
+	line-height: 1.4;
+	}
+h1 {
+	font-size: 24px;
+	font-style: italic;
+	}
+h2 {
+	font-size: 16px;
+	margin-bottom: 0;
+	}
+p {
+	margin: 2em 0 0 0;
+	}
+h2 + p {
+	margin-top: 10px;
+	}
+a,
+a:link,
+a:active,
+a:visited {
+	color: #2299FF;
+	text-decoration: none;
+	}
+a:hover {
+	text-decoration: underline;
+	color: #99FFFF;
+	}
+
+#instructions {
+	margin-top: 20px;
+	float: left;
+	width: 49%;
+	}
+#demo {
+	margin-top: 20px;
+	float: right;
+	width: 44%;
+	border-left: 1px solid #333;
+	padding-left: 5%;
+	}
+#demo h2 {
+	margin-bottom: 10px;
+	}
+#container > div {
+	clear: both;
+	float: left;
+	padding-bottom: 2em;
+	width: 100%;
+	}
+#demo p {
+	margin: 0;
+	}
+pre,
+code {
+	font-family: monaco, courier, monospace;
+	font-size: 11px;
+	padding: 5px;
+	background-color: #444;
+	}
+#demo .ss_slider {
+/*	border: 1px solid #6699FF;*/
+	}
+
+
+</style>
+
+<link href="super_slider.css" media="screen" rel="stylesheet" type="text/css" />
+
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js"></script>
+<!-- <script type="text/javascript" src="zepto.min.js"></script> -->
+
+<script type="text/javascript" src="super_slider.js"></script>
+
+<script type="text/javascript" charset="utf-8">
+window.onload = function () {
+	var cont = $("#container"),
+		slider1 = new SuperSlider("slider1"),
+		slider2 = new SuperSlider("slider2", {min: -1, max: 1, default_value: 0, step: 0.2, label: "Second slider:"}),
+		slider3 = new SuperSlider("slider3", {min: 10, max: 100, step: 5, decimal_places: 1, label: "Third slider:"})
+			.bind("change", function (event) {
+				console.log("changed", event.target.val);
+			});
+	
+	$("#demo_1").append(slider1.get(0));
+	$("#demo_2").append(slider2.get(0));
+	$("#demo_3").append(slider3.get(0));
+	
+};
+</script>
+
+</head>
+<body>
+<h1>Super Slider</h1>
+<p><strong>A super little HTML slider widget designed for accurate control of values.<br />Compatible with <a href="http://www.jquery.com/">jQuery</a> or <a href="http://zeptojs.com/">Zepto.js</a>  frameworks.</strong></p>
+
+<div id="instructions">
+	<h2>Instructions</h2>
+	<p>Super slider allows fine control of setting values by providing keyboard input to adjust the values in small increments as well as alt and shift key modifiers when dragging with the mouse.</p>
+	<ul>
+		<li>Normal dragging will change the value based on the step parameter.</li>
+		<li>ALT + drag will change by 0.1x the step parameter.</li>
+		<li>The up and down arrow keys will change the value when the mouse is over the slider widget.</li>
+		<li>SHIFT + arrows will change by 10x the step factor.</li>
+		<li>ALT + arrows will change by 0.1x the step factor.</li>
+		<li>Clicking the label will reset to the default value.</li>
+	</ul>
+	
+	<p><strong>Usage:</strong></p>
+	<pre>var slider = new SuperSlider(slider_id [, options])</pre>
+	<p><strong>Options:</strong></p>
+	<pre>var options = {
+  slider_class   : 'ss_slider', // slider class name
+  track_class    : 'ss_track',  // track class name
+  handle_class   : 'ss_handle', // handle class name
+  input_class    : 'ss_input',  // input class name
+  label_class    : 'ss_label',  // label class name
+  min            : 0,           // minimum value
+  max            : 1,           // maximum value
+  step           : 0.01,        // step increment
+  default_value  : 0.5,         // default value
+  decimal_places : 3,           // decimal place rounding
+  label          : null,        // label
+  name           : null         // input name attribute
+};</pre>
+	
+	<p><strong>Compatibility</strong><br />
+		Tested on Safari 5, Chrome 9, Firefox 3.6+ on Max OS X.</p>
+	
+	<p><strong>About</strong><br />
+		Created by <a href="http://www.subblue.com/">Tom Beddard</a>. Code on <a href="https://github.com/subblue/SuperSlider">github</a>.<br />Released under the <a href="http://www.opensource.org/licenses/mit-license.php">MIT license</a>.</p>
+</div>
+
+<div id="demo">
+	<h2>Demo</h2>
+	
+	<form id="container" action="#">
+		<div id="demo_1">
+			<p>The default slider. Range: 0..1, step: 0.01, decimal places: 3</p>
+			<pre>slider1 = new SuperSlider("slider2");</pre>
+		</div>
+		
+		<div id="demo_2">
+			<p>Range: 10..100, step: 5, decimal places: 1</p>
+<pre>slider = new SuperSlider("slider2", 
+  { min: -1, 
+    max: 1, 
+    default_value: 0, 
+    step: 0.2, 
+    label: "Second slider:"
+  });</pre>
+		</div>
+		
+		<div id="demo_3">
+			<p>Range: 10..100, step: 5, decimal places: 1</p>
+<pre>slider = new SuperSlider("slider3", 
+  { min: 10, 
+    max: 100, 
+    step: 5, 
+    decimal_places: 1
+    label: "Third slider:"
+  })
+  .bind("change",
+    function (event) {
+      // Slider value:
+      console.log(event.target.val);
+    }
+  );</pre>
+		</div>
+		
+	</form>
+</div>
+
+
+
+</body>
+</html>
